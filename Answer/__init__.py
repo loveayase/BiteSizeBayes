@@ -33,5 +33,12 @@ class Answer:
     def conditional(proposition: DataFrame, given: DataFrame):
         return Answer.prob(proposition[given])
 
+    @staticmethod
+    def update(table: DataFrame):
+        table['unnorm'] = table['prior'] * table['likelihood']
+        prob_data = table['unnorm'].sum()
+        table['posterior'] = table['unnorm'] / prob_data
+        return prob_data
+
     def print_question_information(self):
         print(f'Question {self.chapter}-{self.question_number}')
