@@ -80,7 +80,7 @@ class Question3(Answer):
         table = pd.DataFrame(index=['D1', 'D2', 'D3'])
         # 최초 선택시 문에 상품이 있을 확률
         table['prior'] = 1 / 3, 1 / 3, 1 / 3
-        table['likelihood'] = 1 / 2, 1, 0
+        table['likelihood'] = 0, 1, 0
         table['unnorm'] = table['prior'] * table['likelihood']
         prob_data = self.update(table)
         print(table['posterior']['D2'])

@@ -8,6 +8,7 @@
 
 from abc import abstractmethod
 from pandas.core.frame import DataFrame
+from empiricaldist import Pmf
 
 
 class Answer:
@@ -39,6 +40,15 @@ class Answer:
         prob_data = table['unnorm'].sum()
         table['posterior'] = table['unnorm'] / prob_data
         return prob_data
+
+    @staticmethod
+    def update_dice(pmf: Pmf, data):
+        hypos = pmf.qs
+        likelihood = 1 / hypos
+        impossible = (data > hypos)
+        likelihood[impossible] = 0
+        pmf *= likelihood
+        pmf.normalize()
 
     def print_question_information(self):
         print(f'Question {self.chapter}-{self.question_number}')
